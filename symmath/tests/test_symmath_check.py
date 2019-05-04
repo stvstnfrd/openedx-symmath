@@ -5,15 +5,15 @@ from symmath.symmath_check import symmath_check
 
 
 class SymmathCheckTest(TestCase):
-    def test_symmath_check_integers(self):
+    def test_check_integers(self):
         number_list = [i for i in range(-100, 100)]
         self._symmath_check_numbers(number_list)
 
-    def test_symmath_check_floats(self):
+    def test_check_floats(self):
         number_list = [i + 0.01 for i in range(-100, 100)]
         self._symmath_check_numbers(number_list)
 
-    def test_symmath_check_same_symbols(self):
+    def test_check_same_symbols(self):
         expected_str = "x+2*y"
         dynamath = '''
 <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -32,7 +32,7 @@ class SymmathCheckTest(TestCase):
         result = symmath_check(expected_str, expected_str, dynamath=[dynamath])
         self.assertTrue('ok' in result and result['ok'])
 
-    def test_symmath_check_equivalent_symbols(self):
+    def test_check_equivalent_symbols(self):
         expected_str = "x+2*y"
         input_str = "x+y+y"
         dynamath = '''
@@ -52,7 +52,7 @@ class SymmathCheckTest(TestCase):
         result = symmath_check(expected_str, input_str, dynamath=[dynamath])
         self.assertTrue('ok' in result and result['ok'])
 
-    def test_symmath_check_different_symbols(self):
+    def test_check_different_symbols(self):
         expected_str = "0"
         input_str = "x+y"
         dynamath = '''
@@ -73,11 +73,11 @@ class SymmathCheckTest(TestCase):
 
     def _symmath_check_numbers(self, number_list):
 
-        for n in number_list:
+        for number in number_list:
 
             # expect = ans, so should say the answer is correct
-            expect = n
-            ans = n
+            expect = number
+            ans = number
             result = symmath_check(str(expect), str(ans))
             self.assertTrue('ok' in result and result['ok'],
                             "%f should == %f" % (expect, ans))
