@@ -11,6 +11,7 @@ Provides sympy representation.
 # Author: I. Chuang <ichuang@mit.edu>
 #
 
+from __future__ import absolute_import
 import logging
 import operator
 import os
@@ -31,6 +32,7 @@ from sympy.physics.quantum.qubit import Qubit
 from sympy.physics.quantum.state import Ket
 from sympy.printing.latex import LatexPrinter
 from sympy.printing.str import StrPrinter
+from functools import reduce
 
 log = logging.getLogger(__name__)
 

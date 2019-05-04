@@ -3,6 +3,7 @@ Tests of symbolic math
 """
 # pylint: disable=c-extension-no-member
 # pylint: disable=missing-docstring
+from __future__ import absolute_import
 import re
 import unittest
 
