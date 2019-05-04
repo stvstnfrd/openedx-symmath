@@ -21,6 +21,9 @@ import unicodedata
 from copy import deepcopy
 from xml.sax.saxutils import unescape
 
+from six import string_types
+from six import text_type
+
 import sympy
 from lxml import etree
 from sympy import latex, sympify
@@ -206,7 +209,7 @@ class formula(object):
         for k in xml:
             tag = gettag(k)
             if tag == 'mi' or tag == 'ci':
-                usym = unicode(k.text)
+                usym = text_type(k.text)
                 try:
                     udata = unicodedata.name(usym)
                 except Exception:  # pylint: disable=broad-except
@@ -232,7 +235,7 @@ class formula(object):
         it, if possible...
         """
 
-        if isinstance(xml, (str, unicode)):
+        if isinstance(xml, string_types):
             xml = etree.fromstring(xml)		# TODO: wrap in try
 
         xml = self.fix_greek_in_mathml(xml)	 # convert greek utf letters to greek spelled out in ascii
@@ -568,7 +571,7 @@ class formula(object):
                 usym = parse_presentation_symbol(xml[0])
                 sym = sympy.Symbol(str(usym))
             else:
-                usym = unicode(xml.text)
+                usym = text_type(xml.text)
                 if 'hat' in usym:
                     sym = my_sympify(usym)
                 else:
