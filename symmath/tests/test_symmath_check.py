@@ -1,6 +1,7 @@
+# pylint: disable=missing-docstring
 from unittest import TestCase
 
-from .symmath_check import symmath_check
+from symmath.symmath_check import symmath_check
 
 
 class SymmathCheckTest(TestCase):

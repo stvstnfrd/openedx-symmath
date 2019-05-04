@@ -1,12 +1,14 @@
 """
 Tests of symbolic math
 """
+# pylint: disable=c-extension-no-member
+# pylint: disable=missing-docstring
 import re
 import unittest
 
 from lxml import etree
 
-import formula
+from symmath import formula
 
 
 def stripXML(xml):
@@ -22,7 +24,7 @@ class FormulaTest(unittest.TestCase):
 
     def setUp(self):
         super(FormulaTest, self).setUp()
-        self.formulaInstance = formula.formula('')
+        self.formulaInstance = formula('')
 
     def test_replace_mathvariants(self):
         expr = '''
