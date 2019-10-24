@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name="symmath",
-    version="0.3",
+    version="0.4",
     packages=["symmath"],
     install_requires=[
         'lxml',
