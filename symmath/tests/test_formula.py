@@ -1,6 +1,7 @@
 """
 Tests of symbolic math
 """
+# pylint: disable=c-extension-no-member
 from __future__ import absolute_import
 import re
 import unittest
@@ -10,20 +11,29 @@ from lxml import etree
 from .. import formula
 
 
-def stripXML(xml):
+def strip_xml(xml):
+    """
+    Remove XML from the input string
+    """
     xml = xml.replace('\n', '')
     xml = re.sub(r'\> +\<', '><', xml)
     return xml
 
 
 class FormulaTest(unittest.TestCase):
+    """
+    Test symmath formulas
+    """
     # for readability later
-    mathml_start = '<math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true">'
+    mathml_start = (
+        '<math xmlns="http://www.w3.org/1998/Math/MathML">'
+        '<mstyle displaystyle="true">'
+    )
     mathml_end = '</mstyle></math>'
 
     def setUp(self):
         super(FormulaTest, self).setUp()
-        self.formulaInstance = formula('')
+        self.forumula_instance = formula('')
 
     def test_replace_mathvariants(self):
         expr = '''
@@ -34,12 +44,12 @@ class FormulaTest(unittest.TestCase):
         expected = '<mi>scriptN</mi>'
 
         # wrap
-        expr = stripXML(self.mathml_start + expr + self.mathml_end)
-        expected = stripXML(self.mathml_start + expected + self.mathml_end)
+        expr = strip_xml(self.mathml_start + expr + self.mathml_end)
+        expected = strip_xml(self.mathml_start + expected + self.mathml_end)
 
         # process the expression
         xml = etree.fromstring(expr)
-        xml = self.formulaInstance.preprocess_pmathml(xml)
+        xml = self.forumula_instance.preprocess_pmathml(xml)
         test = etree.tostring(xml)
 
         # success?
@@ -53,17 +63,18 @@ class FormulaTest(unittest.TestCase):
     <mo>&#x200B;</mo>
     <mi>b</mi>
   </mrow>
-</msup>'''
+</msup>
+'''.strip()
 
         expected = '<mi>a__b</mi>'
 
         # wrap
-        expr = stripXML(self.mathml_start + expr + self.mathml_end)
-        expected = stripXML(self.mathml_start + expected + self.mathml_end)
+        expr = strip_xml(self.mathml_start + expr + self.mathml_end)
+        expected = strip_xml(self.mathml_start + expected + self.mathml_end)
 
         # process the expression
         xml = etree.fromstring(expr)
-        xml = self.formulaInstance.preprocess_pmathml(xml)
+        xml = self.forumula_instance.preprocess_pmathml(xml)
         test = etree.tostring(xml)
 
         # success?
@@ -78,17 +89,18 @@ class FormulaTest(unittest.TestCase):
     <mo>&#x200B;</mo>
     <mi>c</mi>
   </mrow>
-</msubsup>'''
+</msubsup>
+'''.strip()
 
         expected = '<mi>a_b__c</mi>'
 
         # wrap
-        expr = stripXML(self.mathml_start + expr + self.mathml_end)
-        expected = stripXML(self.mathml_start + expected + self.mathml_end)
+        expr = strip_xml(self.mathml_start + expr + self.mathml_end)
+        expected = strip_xml(self.mathml_start + expected + self.mathml_end)
 
         # process the expression
         xml = etree.fromstring(expr)
-        xml = self.formulaInstance.preprocess_pmathml(xml)
+        xml = self.forumula_instance.preprocess_pmathml(xml)
         test = etree.tostring(xml)
 
         # success?
@@ -100,17 +112,18 @@ class FormulaTest(unittest.TestCase):
   <mi>a</mi>
   <mi>b</mi>
   <mi>c</mi>
-</msubsup>'''
+</msubsup>
+'''.strip()
 
         expected = '<msup><mi>a_b</mi><mi>c</mi></msup>'  # which is (a_b)^c
 
         # wrap
-        expr = stripXML(self.mathml_start + expr + self.mathml_end)
-        expected = stripXML(self.mathml_start + expected + self.mathml_end)
+        expr = strip_xml(self.mathml_start + expr + self.mathml_end)
+        expected = strip_xml(self.mathml_start + expected + self.mathml_end)
 
         # process the expression
         xml = etree.fromstring(expr)
-        xml = self.formulaInstance.preprocess_pmathml(xml)
+        xml = self.forumula_instance.preprocess_pmathml(xml)
         test = etree.tostring(xml)
 
         # success?

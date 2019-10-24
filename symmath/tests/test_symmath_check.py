@@ -1,3 +1,6 @@
+"""
+Test symmath checks
+"""
 from __future__ import absolute_import
 from unittest import TestCase
 
@@ -7,8 +10,12 @@ from ..symmath_check import symmath_check
 
 
 class SymmathCheckTest(TestCase):
+    """
+    Test Symmath Checks
+    """
+
     def test_symmath_check_integers(self):
-        number_list = [i for i in range(-100, 100)]
+        number_list = range(-100, 100)
         self._symmath_check_numbers(number_list)
 
     def test_symmath_check_floats(self):
@@ -74,12 +81,15 @@ class SymmathCheckTest(TestCase):
         self.assertNotIn('fail', result['msg'])
 
     def _symmath_check_numbers(self, number_list):
+        """
+        Check symmath numbers
+        """
 
-        for n in number_list:
+        for number in number_list:
 
             # expect = ans, so should say the answer is correct
-            expect = n
-            ans = n
+            expect = number
+            ans = number
             result = symmath_check(str(expect), str(ans))
             self.assertTrue('ok' in result and result['ok'],
                             "%f should == %f" % (expect, ans))
